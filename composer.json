@@ -1,0 +1,34 @@
+{
+    "name": "uncleproject/uncle-resource",
+    "description": "An resource installer for uncle-laravel",
+    "type": "library",
+    "authors": [
+        {
+            "name": "fabriziopulvirenti",
+            "email": "fabrizio.pulvirenti.86@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "UncleProject\\UncleResource\\": "src/"
+        }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "UncleProject\\UncleResource\\UncleResourceServiceProvider"
+        ]
+      }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "source",
+        "sort-packages": true
+    }
+}
