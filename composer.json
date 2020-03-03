@@ -16,13 +16,13 @@
     },
     "autoload": {
         "psr-4": {
-            "UncleProject\\UncleResource\\": "src/"
+            "UncleProject\\UncleResources\\": "src/"
         }
     },
     "extra": {
       "laravel": {
         "providers": [
-          "UncleProject\\UncleResource\\UncleResourceServiceProvider"
+          "UncleProject\\UncleResources\\UncleResourcesServiceProvider"
         ]
       }
     },
