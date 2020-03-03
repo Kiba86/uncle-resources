@@ -26,6 +26,6 @@ class UncleResourcesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $i = 1;
+
     }
 }

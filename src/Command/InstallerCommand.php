@@ -14,14 +14,14 @@ class InstallerCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'resource:generate {resource} ';
+    protected $signature = 'resource:install {resource} ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new resource in project';
+    protected $description = 'Install a uncle resource in project';
 
     /**
      * Create a new command instance.
@@ -46,5 +46,18 @@ class InstallerCommand extends BaseCommand
             return;
         }
 
+        \File::makeDirectory($this->resourcePath);
+        \File::copyDirectory(__DIR__.'/../Resources/'.$this->resourceName,$this->resourcePath);
+
+        $this->writeInFile(
+            config_path('app.php'),
+            '//Add Resource - Uncle Comment (No Delete)',
+            $this->compileStub(
+                ['{resourceName}'],
+                [$this->resourceName],
+                __DIR__.'/stubs/AddResourcePath.stub')
+        );
+
+        $this->info("Resource {$this->resourceName} installed successfully");
     }
 }
