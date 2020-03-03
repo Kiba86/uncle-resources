@@ -12,7 +12,6 @@ $api->version('v1', function ($api) {
     $api->group(['prefix' => 'auth'], function(Router $api) {
         $api->post('login', App::make('UsersResource')->getControllerClassPath('Auth').'@login');
         $api->post('signup/user', App::make('UsersResource')->getControllerClassPath('Auth').'@signUp');
-        $api->post('login/userAdmin', App::make('UsersResource')->getControllerClassPath('Auth').'@loginUserAdmin');
         $api->post('refresh', App::make('UsersResource')->getControllerClassPath('Auth').'@refresh');
         $api->post('recovery', App::make('UsersResource')->getControllerClassPath('Auth').'@recovery');
         $api->post('reset', [
@@ -22,6 +21,7 @@ $api->version('v1', function ($api) {
         $api->group(['middleware' => ['jwt.auth']], function ($api) {
             $api->post('logout', App::make('UsersResource')->getControllerClassPath('Auth').'@logout');
         });
+
         $api->get('social/{driver}', [
             'uses' => App::make('UsersResource')->getControllerClassPath('Auth').'@socialRedirectToProvider',
             'as' => 'social.oauth'
@@ -31,6 +31,8 @@ $api->version('v1', function ($api) {
             'as' => 'social.callback'
         ]);
     });
+
+
     $api->group(['middleware' => ['role:user']], function ($api) {
         $api->get('user', App::make('UsersResource')->getControllerClassPath('Auth').'@getByToken');
 
