@@ -39,6 +39,11 @@ class InstallerCommand extends BaseCommand
         $names = $this->resolveResourceName($this->argument('resource'));
         $this->resourceName = $names['plural'];
 
+        if(!in_array($this->resourceName, config('uncle.installable'))){
+            $this->error($this->resourceName  . ' is not an available resource');
+            return;
+        }
+
         $this->resourcePath = app_path('Http'.DIRECTORY_SEPARATOR.'Resources'). DIRECTORY_SEPARATOR. $this->resourceName;
 
         if (\File::exists($this->resourcePath)) {

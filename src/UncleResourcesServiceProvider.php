@@ -13,6 +13,10 @@ class UncleResourcesServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/resources.php', 'uncle'
+        );
+
         $this->commands([
             \UncleProject\UncleResources\Command\InstallerCommand::class,
 
