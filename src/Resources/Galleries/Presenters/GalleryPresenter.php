@@ -14,9 +14,9 @@ class GalleryTransformer extends TransformerAbstract
         $utils = App::make('Utils');
 
         return [
-            'id' => $gallery->id,
-            'name' => $gallery->name,
-            'updated_at' => $gallery->updated_at,
+            'id'          => $gallery->id,
+            'name'        => $gallery->name,
+            'updated_at'  => $gallery->updated_at,
             'imagesCount' => $gallery->images->count(),
         ];
     }
