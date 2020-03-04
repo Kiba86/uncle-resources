@@ -33,6 +33,7 @@ $api->version('v1', function ($api) {
     });
 
 
+
     $api->group(['middleware' => ['role:user']], function ($api) {
         $api->get('user', App::make('UsersResource')->getControllerClassPath('Auth').'@getByToken');
 
