@@ -52,7 +52,9 @@ class InstallerCommand extends BaseCommand
         }
 
         \File::makeDirectory($this->resourcePath);
-        \File::copyDirectory(__DIR__.'/../Resources/'.$this->resourceName,$this->resourcePath);
+        \File::copyDirectory(__DIR__.'/../Resources/'.$this->resourceName, $this->resourcePath);
+
+        $this->renameMigrations();
 
         $this->writeInFile(
             config_path('app.php'),
@@ -64,5 +66,20 @@ class InstallerCommand extends BaseCommand
         );
 
         $this->info("Resource {$this->resourceName} installed successfully");
+    }
+
+    private function renameMigrations(){
+
+        $migrations = \File::allFiles($this->resourcePath.DIRECTORY_SEPARATOR.'Database'.DIRECTORY_SEPARATOR.'migrations');
+
+        foreach ($migrations as $migration)
+        {
+            $migrationFile = explode('_',$migration->getFilename(),2);
+            $priority = $migrationFile[0];
+            $migrationName = $migrationFile[1];
+            $time = date("Y_m_d_His_", (strtotime("now") + $priority));
+            \File::move($migration->getPathname(),$migration->getPath().'/'.$time.$migrationName);
+        }
+
     }
 }
