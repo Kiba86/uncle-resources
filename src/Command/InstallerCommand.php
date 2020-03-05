@@ -51,7 +51,7 @@ class InstallerCommand extends BaseCommand
         }
 
         if (\File::exists($this->resourcePath)) {
-            $this->error($this->resourceName  . ' resource already exists! ');
+            $this->error($this->resourceName  . ' resource already exists! Use --force option to over the current Resource');
             return;
         }
 
