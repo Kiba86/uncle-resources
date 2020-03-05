@@ -14,7 +14,7 @@ class InstallerCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'resource:install {resource} ';
+    protected $signature = 'resource:install {resource} {--force}';
 
     /**
      * The console command description.
@@ -39,15 +39,19 @@ class InstallerCommand extends BaseCommand
         $names = $this->resolveResourceName($this->argument('resource'));
         $this->resourceName = $names['plural'];
 
-        if(!in_array($this->resourceName, config('uncle.installable'))){
+        if(!array_key_exists($this->resourceName, config('uncle.installable'))){
             $this->error($this->resourceName  . ' is not an available resource');
             return;
         }
 
         $this->resourcePath = app_path('Http'.DIRECTORY_SEPARATOR.'Resources'). DIRECTORY_SEPARATOR. $this->resourceName;
 
+        if ($this->option('force')) {
+            \File::deleteDirectory($this->resourcePath);
+        }
+
         if (\File::exists($this->resourcePath)) {
-            $this->error($this->resourceName  . ' resource already exists');
+            $this->error($this->resourceName  . ' resource already exists! ');
             return;
         }
 

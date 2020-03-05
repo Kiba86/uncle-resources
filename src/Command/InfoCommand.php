@@ -38,8 +38,6 @@ class InfoCommand extends BaseCommand
         foreach(config('uncle.installable') as $resource => $description){
             $this->info($resource  . ': '.$description);
         }
-
-
     }
 
 
