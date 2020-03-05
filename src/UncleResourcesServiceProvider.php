@@ -18,6 +18,7 @@ class UncleResourcesServiceProvider extends ServiceProvider
         );
 
         $this->commands([
+            \UncleProject\UncleResources\Command\InfoCommand::class,
             \UncleProject\UncleResources\Command\InstallerCommand::class,
 
         ]);

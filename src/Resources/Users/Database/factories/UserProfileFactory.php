@@ -16,15 +16,15 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App::make('UsersResource')->getModelClassPath('UserProfile'), function (Faker $faker) {
-    $countriesRepository = App::make('CountriesResource')->getRepository('Country');
-    $countries = $countriesRepository->all();
+    /*$countriesRepository = App::make('CountriesResource')->getRepository('Country');
+    $countries = $countriesRepository->all();*/
     return [
         'email' => '',
         'firstName' => $faker->firstName,
         'lastName' => $faker->lastName,
         'gender' => $faker->randomElement($array = array ('M','F')),
         'birthDate' => $faker->date,
-        'country_id' => $faker->randomElement($countries)->id,
+        //'country_id' => $faker->randomElement($countries)->id,
         'phonePrefix' => '+'.$faker->regexify('[0-9]{2}'),
         'phoneNumber' => $faker->regexify('[0-9]{10}'),
     ];

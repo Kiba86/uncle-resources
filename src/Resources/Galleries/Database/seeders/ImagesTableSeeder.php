@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Galleries\Database\seeders;
 
 use Illuminate\Database\Seeder;
+use App;
 
 class ImagesTableSeeder extends Seeder
 {

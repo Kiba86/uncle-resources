@@ -72,13 +72,8 @@ class InstallerCommand extends BaseCommand
 
         $migrations = \File::allFiles($this->resourcePath.DIRECTORY_SEPARATOR.'Database'.DIRECTORY_SEPARATOR.'migrations');
 
-        foreach ($migrations as $migration)
-        {
-            $migrationFile = explode('_',$migration->getFilename(),2);
-            $priority = $migrationFile[0];
-            $migrationName = $migrationFile[1];
-            $time = date("Y_m_d_His_", (strtotime("now") + $priority));
-            \File::move($migration->getPathname(),$migration->getPath().'/'.$time.$migrationName);
+        foreach ($migrations as $migration) {
+            \File::move($migration->getPathname(),$migration->getPath().'/'.date("Y_m_d_His").$migration->getFilename());
         }
 
     }
