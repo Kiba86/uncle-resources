@@ -8,14 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Prettus\Repository\Contracts\Presentable;
 use Prettus\Repository\Traits\PresentableTrait;
-use Hash;
 use Spatie\Permission\Traits\HasRoles;
-use UncleProject\UncleLaravel\Traits\HasProfiles;
+use App\Http\Resources\Users\Traits\HasProfiles;
+use App\Http\Resources\Users\Traits\HasSocialAccounts;
+
+use Hash;
 use App;
 
 class User extends Authenticatable implements JWTSubject, Presentable
 {
-    use Notifiable, HasRoles, HasProfiles, PresentableTrait;
+    use Notifiable, HasRoles, HasProfiles, HasSocialAccounts, PresentableTrait;
 
     protected $guard_name = 'api';
 
@@ -91,19 +93,6 @@ class User extends Authenticatable implements JWTSubject, Presentable
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    public function social_accounts() {
-        return $this->hasMany(App::make('UsersResource')->getModelClassPath('UserSocialAccount'));
-    }
-
-    public function profile() {
-        $roles = $this->getRoleNames()->toArray();
-        if (in_array('user', $roles)) {
-            return $this->hasOne(App::make('UsersResource')->getModelClassPath('UserProfile'));
-        } else if (in_array('admin', $roles)) {
-            return null;
-        }
     }
 
 }

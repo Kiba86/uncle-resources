@@ -32,29 +32,23 @@ $api->version('v1', function ($api) {
         ]);
     });
 
-
-
     $api->group(['middleware' => ['role:user']], function ($api) {
-        $api->get('user', App::make('UsersResource')->getControllerClassPath('Auth').'@getByToken');
+        $api->get('user', App::make('UsersResource')->getControllerClassPath('Auth') . '@getByToken');
+        $api->post('user/profile', App::make('UsersResource')->getControllerClassPath('UserProfile') . '@store');
+        $api->post('user/check_old_password', App::make('UsersResource')->getControllerClassPath('Auth') . '@checkOldPassword');
+        $api->get('user/profile', App::make('UsersResource')->getControllerClassPath('UserProfile') . '@show');
+        $api->match(['put', 'patch'], 'user/profile', App::make('UsersResource')->getControllerClassPath('UserProfile') . '@update');
+        $api->get('user/profile/images/{imageName}', App::make('UsersResource')->getControllerClassPath('UserProfile').'@showImage');
 
-        $api->post('users/profile', App::make('UsersResource')->getControllerClassPath('UserProfile').'@store');
-        $api->group(['middleware' => ['owner:Users,UserProfile,user_id']], function ($api) {
-            $api->get('users/profile/{id}', App::make('UsersResource')->getControllerClassPath('UserProfile').'@show');
-            $api->match(['put', 'patch'], 'users/profile/{id}', App::make('UsersResource')->getControllerClassPath('UserProfile').'@update');
-        });
-
-        $api->get('user_profiles/{id}/images/{imageName}', App::make('UsersResource')->getControllerClassPath('UserProfile').'@showImage');
-
-        $api->match(['put', 'patch'], 'users/password', [
+        $api->match(['put', 'patch'], 'user/password', [
             'uses' => App::make('UsersResource')->getControllerClassPath('Auth').'@changePassword',
             'as' => 'password.change'
         ]);
 
-        $api->match(['put', 'patch'], 'users/email', [
+        $api->match(['put', 'patch'], 'user/email', [
             'uses' => App::make('UsersResource')->getControllerClassPath('Auth').'@changeEmail',
             'as' => 'email.change'
         ]);
-
     });
 
 });

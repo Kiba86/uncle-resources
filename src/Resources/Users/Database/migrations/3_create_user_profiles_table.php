@@ -16,6 +16,7 @@ class CreateUserProfilesTable extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->index()->primary();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('email', 100);
             $table->string('firstName', 100)->nullable();
             $table->string('lastName', 100)->nullable();
             $table->enum('gender', ['M', 'F'])->nullable()->index();

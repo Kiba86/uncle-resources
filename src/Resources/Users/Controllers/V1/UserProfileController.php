@@ -30,15 +30,16 @@ class UserProfileController extends ApiResourceDefaultController {
 
     /**
      * Show user profile
-     * @transformerModel App\Http\Resources\Users\Models\UserProfile
+     * @transformerModel App\Http\Resources\Users\Models\User
      */
-    public function show(Request $request, $key) {
-        return parent::show($request, $key);
+    public function show(Request $request, $key = '') {
+        $user = Auth::user();
+        return parent::show($request, $user->id);
     }
 
     /**
      * Insert user profile
-     * @transformerModel App\Http\Resources\Users\Models\UserProfile
+     * @transformerModel App\Http\Resources\Users\Models\User
      *
      */
     public function store(Request $request) {
@@ -47,22 +48,17 @@ class UserProfileController extends ApiResourceDefaultController {
 
     /**
      * Update user profile
-     * @transformerModel App\Http\Resources\Users\Models\UserProfile
+     * @transformerModel App\Http\Resources\Users\Models\User
      *
      */
-    public function update(Request $request, $key) {
-
-        if($request->firstName || $request->lastName || $request->phoneNumber) {
-            $user = Auth::user();
-            if (!$user->hasRole('userAdmin')) {
-                throw new UnprocessableEntityHttpException();
-            }
-        }
-        return parent::update($request, $key);
+    public function update(Request $request, $key = '') {
+        $user = Auth::user();
+        return parent::update($request, $user->id);
     }
 
-    public function showImage($id, $imageName) {
-        return $this->renderImage('user_profiles', $id, $imageName);
+    public function showImage($imageName) {
+        $user = Auth::user();
+        return $this->renderImage('user_profiles', $user->id, $imageName);
     }
 
 }
