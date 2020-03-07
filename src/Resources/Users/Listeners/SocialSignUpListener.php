@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Users\Listeners;
  
 use App\Http\Resources\Users\Events\SocialSignUpEvent;
+use App\Http\Resources\Users\Notifications\SignUpNotification;
 use App;
 
 class SocialSignUpListener {
@@ -23,6 +24,8 @@ class SocialSignUpListener {
                 'firstName' => $socialUser->name
             ]);
         }
+
+        $user->notify( new SignUpNotification($user));
     }
 
 }

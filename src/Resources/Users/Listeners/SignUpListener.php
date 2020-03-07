@@ -16,8 +16,15 @@ class SignUpListener {
         $user->assignRole($fields->role);
         $user->save();
 
+        $userResource = App::make('UsersResource');
+        $userProfileRepository = $userResource->getRepository('UserProfile');
+        $userProfile = $userProfileRepository->findByField('user_id', $user->id)->first();
+        if (!$userProfile) {
+            $user->profile()->create(['user_id' => $user->id]);
+        }
+
         $user->notify( new SignUpNotification($user));
-        //MailHelper::send($user->email, new Welcome());
+
     }
 
 }

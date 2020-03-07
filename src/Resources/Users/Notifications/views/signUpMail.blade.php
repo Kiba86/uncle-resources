@@ -1,5 +1,5 @@
 @component('mail::message')
 
-#Benvenuto
+#Welcome
 
 @endcomponent
