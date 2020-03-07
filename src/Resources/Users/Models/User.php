@@ -11,6 +11,7 @@ use Prettus\Repository\Traits\PresentableTrait;
 use Spatie\Permission\Traits\HasRoles;
 use App\Http\Resources\Users\Traits\HasProfiles;
 use App\Http\Resources\Users\Traits\HasSocialAccounts;
+use App\Http\Resources\Users\Notifications\ResetPasswordNotification;
 
 use Hash;
 use App;
@@ -93,6 +94,17 @@ class User extends Authenticatable implements JWTSubject, Presentable
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token, $this));
     }
 
 }

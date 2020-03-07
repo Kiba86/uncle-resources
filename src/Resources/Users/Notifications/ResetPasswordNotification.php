@@ -40,16 +40,11 @@ class ResetPasswordNotification extends Notification
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail( $notifiable ) {
-        if (in_array('customer', $this->user->getRoleNames()->toArray())) {
-            $link = config("app.url")."/#/password-reset?token=" . $this->token;
-        } else if (in_array('admin', $this->user->getRoleNames()->toArray())) {
-            $link = config("app.url")."/admin/#/password-reset?token=" . $this->token;
-        }
-        //$link = "http://localhost:8081/#/password-reset?token=" . $this->token;
+        $link = config("app.url")."/password-reset?token=" . $this->token;
         return ( new MailMessage )
             ->from(config('mail.from.address'))
             ->subject( 'Changer le mot de passe' )
-            ->markdown('mails.resetPassword', ['link' => $link]);
+            ->markdown('resetPasswordMail', ['link' => $link]);
     }
 
     /**
