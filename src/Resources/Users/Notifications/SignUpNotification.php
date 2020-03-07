@@ -15,9 +15,8 @@ class SignUpNotification extends Notification
      *
      * @return void
      */
-    public function __construct() {
-
-
+    public function __construct($user) {
+        $this->user = $user;
     }
 
     /**
@@ -42,7 +41,7 @@ class SignUpNotification extends Notification
         return ( new MailMessage )
             ->from(config('mail.from.address'))
             ->subject( 'Welcome' )
-            ->markdown('mails.welcome');
+            ->markdown('signUpMail');
     }
 
     /**

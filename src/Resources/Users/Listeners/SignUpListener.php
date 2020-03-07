@@ -3,8 +3,7 @@
 namespace App\Http\Resources\Users\Listeners;
 
 use App\Http\Resources\Users\Events\SignUpEvent;
-use App\Mail\Welcome;
-use UncleProject\UncleLaravel\Helpers\MailHelper;
+use App\Http\Resources\Users\Notifications\SignUpNotification;
 
 class SignUpListener {
 
@@ -17,7 +16,8 @@ class SignUpListener {
         $user->assignRole($fields->role);
         $user->save();
 
-        MailHelper::send($user->email, new Welcome());
+        $user->notify( new SignUpNotification($user));
+        //MailHelper::send($user->email, new Welcome());
     }
 
 }
