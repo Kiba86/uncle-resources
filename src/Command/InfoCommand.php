@@ -35,8 +35,8 @@ class InfoCommand extends BaseCommand
     public function handle()
     {
         $this->info('List of available resources:');
-        foreach(config('uncle.installable') as $resource => $description){
-            $this->info($resource  . ': '.$description);
+        foreach(config('uncle.installable') as $resource => $info){
+            $this->info($resource  . ': '.$info['description']);
         }
     }
 

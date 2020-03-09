@@ -25,7 +25,7 @@ class SocialSignUpListener {
             ]);
         }
 
-        $user->notify( new SignUpNotification($user));
+        $user->notify( new SignUpNotification());
     }
 
 }

@@ -135,7 +135,6 @@ class AuthController extends Controller {
             throw new HttpException(500);
         }
         $token = $JWTAuth->fromUser($user);
-        $user->profile()->create(['user_id' => $user->id]);
         $user = $userRepository->findWithPresenter($user->id, 'User');
         return $this->validSuccessJsonResponse('Success', [
             'token' => $token,

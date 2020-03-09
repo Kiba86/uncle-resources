@@ -4,6 +4,7 @@ namespace App\Http\Resources\Users\Listeners;
 
 use App\Http\Resources\Users\Events\SignUpEvent;
 use App\Http\Resources\Users\Notifications\SignUpNotification;
+use App;
 
 class SignUpListener {
 
@@ -23,7 +24,7 @@ class SignUpListener {
             $user->profile()->create(['user_id' => $user->id]);
         }
 
-        $user->notify( new SignUpNotification($user));
+        $user->notify( new SignUpNotification());
 
     }
 

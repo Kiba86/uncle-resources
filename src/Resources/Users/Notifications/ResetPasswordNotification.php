@@ -4,9 +4,10 @@ namespace App\Http\Resources\Users\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPasswordNotification extends Notification
+class ResetPasswordNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -17,9 +18,8 @@ class ResetPasswordNotification extends Notification
      *
      * @return void
      */
-    public function __construct($token, $user) {
+    public function __construct($token) {
         $this->token = $token;
-        $this->user = $user;
     }
 
     /**

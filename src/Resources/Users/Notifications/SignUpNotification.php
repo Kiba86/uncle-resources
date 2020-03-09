@@ -4,9 +4,10 @@ namespace App\Http\Resources\Users\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SignUpNotification extends Notification
+class SignUpNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -15,8 +16,8 @@ class SignUpNotification extends Notification
      *
      * @return void
      */
-    public function __construct($user) {
-        $this->user = $user;
+    public function __construct() {
+
     }
 
     /**

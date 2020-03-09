@@ -104,7 +104,7 @@ class User extends Authenticatable implements JWTSubject, Presentable
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPasswordNotification($token, $this));
+        $this->notify(new ResetPasswordNotification($token));
     }
 
 }
