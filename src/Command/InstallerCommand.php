@@ -14,7 +14,7 @@ class InstallerCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'resource:install {resource} {--force}';
+    protected $signature = 'resource:install {resource} {--force : force to remove and reinstall}';
 
     /**
      * The console command description.
@@ -51,7 +51,7 @@ class InstallerCommand extends BaseCommand
         }
 
         if (\File::exists($this->resourcePath)) {
-            $this->error($this->resourceName  . ' resource already exists! Use --force option to over the current Resource');
+            $this->error($this->resourceName  . ' resource already exists! Use --force option to override the current Resource');
             return;
         }
 
