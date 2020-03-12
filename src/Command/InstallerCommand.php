@@ -61,7 +61,7 @@ class InstallerCommand extends BaseCommand
         $this->renameMigrations();
 
         $this->writeInFile(
-            config_path('app.php'),
+            config_path('uncle.php'),
             '//Add Resource - Uncle Comment (No Delete)',
             $this->compileStub(
                 ['{resourceName}'],
