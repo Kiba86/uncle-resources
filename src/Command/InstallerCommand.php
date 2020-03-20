@@ -55,6 +55,13 @@ class InstallerCommand extends BaseCommand
             return;
         }
 
+        foreach (config('uncle.installable.'.$this->resourceName.'.required') as $required){
+            if (!\File::exists(app_path('Http'.DIRECTORY_SEPARATOR.'Resources'). DIRECTORY_SEPARATOR. $required)) {
+                $this->error($this->resourceName  . " need resource $required to be installed!");
+                return;
+            }
+        }
+
         \File::makeDirectory($this->resourcePath);
         \File::copyDirectory(__DIR__.'/../Resources/'.$this->resourceName, $this->resourcePath);
 

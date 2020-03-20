@@ -23,6 +23,10 @@ return [
             'description' => 'A resource that manages an archive of countries',
             'required' => []
         ],
+        'Comments' => [
+            'description' => 'A resource that manages comment for various entity',
+            'required' => [ 'Users' ]
+        ],
     ],
 
 ];
