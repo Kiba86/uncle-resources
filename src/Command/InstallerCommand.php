@@ -3,6 +3,7 @@
 namespace UncleProject\UncleResources\Command;
 
 use UncleProject\UncleLaravel\Classes\BaseCommand;
+use Illuminate\Support\Facades\Artisan;
 
 class InstallerCommand extends BaseCommand
 {
@@ -36,8 +37,7 @@ class InstallerCommand extends BaseCommand
 
     public function handle()
     {
-        $names = $this->resolveResourceName($this->argument('resource'));
-        $this->resourceName = $names['plural'];
+        $this->resourceName = $this->argument('resource');
 
         if(!array_key_exists($this->resourceName, config('uncle.installable'))){
             $this->error($this->resourceName  . ' is not an available resource');
@@ -76,16 +76,29 @@ class InstallerCommand extends BaseCommand
                 __DIR__.'/stubs/AddResourcePath.stub')
         );
 
+        $postinstall = config('uncle.installable.'.$this->resourceName.'.postinstall');
+
+        if(isset($postinstall)){
+            if(isset($postinstall['commands'])){
+                foreach($postinstall['commands'] as $command){
+                    Artisan::call($command);
+                    $this->info(Artisan::output());
+                }
+            }
+        }
+
         $this->info("Resource {$this->resourceName} installed successfully");
     }
 
     private function renameMigrations(){
 
-        $migrations = \File::allFiles($this->resourcePath.DIRECTORY_SEPARATOR.'Database'.DIRECTORY_SEPARATOR.'migrations');
+        if (\File::exists($this->resourcePath.DIRECTORY_SEPARATOR.'Database'))
+        {
+            $migrations = \File::allFiles($this->resourcePath.DIRECTORY_SEPARATOR.'Database'.DIRECTORY_SEPARATOR.'migrations');
 
-        foreach ($migrations as $migration) {
-            \File::move($migration->getPathname(),$migration->getPath().'/'.date("Y_m_d_His").$migration->getFilename());
+            foreach ($migrations as $migration) {
+                \File::move($migration->getPathname(),$migration->getPath().'/'.date("Y_m_d_His").$migration->getFilename());
+            }
         }
-
     }
 }
