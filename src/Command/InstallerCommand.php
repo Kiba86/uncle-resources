@@ -37,6 +37,8 @@ class InstallerCommand extends BaseCommand
 
     public function handle()
     {
+        $this->callSilent('config:cache', [ '--env' => 'local']);
+
         $this->resourceName = $this->argument('resource');
 
         if(!array_key_exists($this->resourceName, config('uncle.installable'))){
@@ -67,22 +69,24 @@ class InstallerCommand extends BaseCommand
 
         $this->renameMigrations();
 
-        $this->writeInFile(
-            config_path('uncle.php'),
-            '//Add Resource - Uncle Comment (No Delete)',
-            $this->compileStub(
-                ['{resourceName}'],
-                [$this->resourceName],
-                __DIR__.'/stubs/AddResourcePath.stub')
-        );
+        if(!array_key_exists($this->resourceName, config('uncle.resources')))
+        {
+            $this->writeInFile(
+                config_path('uncle.php'),
+                '//Add Resource - Uncle Comment (No Delete)',
+                $this->compileStub(
+                    ['{resourceName}'],
+                    [$this->resourceName],
+                    __DIR__.'/stubs/AddResourcePath.stub')
+            );
+        }
 
         $postinstall = config('uncle.installable.'.$this->resourceName.'.postinstall');
 
         if(isset($postinstall)){
             if(isset($postinstall['commands'])){
-                foreach($postinstall['commands'] as $command){
-                    Artisan::call($command);
-                    $this->info(Artisan::output());
+                foreach($postinstall['commands'] as $command => $argument ){
+                    $this->callSilent($command, $argument);
                 }
             }
         }

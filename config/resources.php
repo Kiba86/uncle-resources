@@ -31,16 +31,20 @@ return [
             'description' => 'A resource that connect Mailchimp subscribe',
             'required'    => [],
             'postinstall' => [
-                'commands' => ['vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvider"']
+                'commands' => [
+                    'vendor:publish' => [ '--provider' => 'Spatie\Newsletter\NewsletterServiceProvider' ]
+                ]
             ]
         ],
         'ContactUs' => [
             'description' => 'A resource that add a ContactUs routing to api',
             'required'    => [],
             'postinstall' => [
-                'commands' => ['vendor:publish --provider="Spatie\Honeypot\HoneypotServiceProvider" --tag=config']
-            ]
-        ],
+                'commands' => [
+                    'vendor:publish' => [ '--provider' => 'Spatie\Honeypot\HoneypotServiceProvider', '--tag' => 'config']
+                ]
+            ],
+        ]
     ],
 
 ];
