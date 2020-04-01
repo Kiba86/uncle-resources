@@ -41,12 +41,12 @@ $api->version('v1', function ($api) {
         $api->get('user/profile/images/{imageName}', App::make('UsersResource')->getControllerClassPath('UserProfile').'@showImage');
 
         $api->match(['put', 'patch'], 'user/password', [
-            'uses' => App::make('UsersResource')->getControllerClassPath('Auth').'@changePassword',
+            'uses' => App::make('UsersResource')->getControllerClassPath('User').'@changePassword',
             'as' => 'password.change'
         ]);
 
         $api->match(['put', 'patch'], 'user/email', [
-            'uses' => App::make('UsersResource')->getControllerClassPath('Auth').'@changeEmail',
+            'uses' => App::make('UsersResource')->getControllerClassPath('User').'@changeEmail',
             'as' => 'email.change'
         ]);
     });

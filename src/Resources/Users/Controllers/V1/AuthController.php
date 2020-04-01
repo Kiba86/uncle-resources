@@ -161,36 +161,4 @@ class AuthController extends Controller {
         ]);
     }
 
-    /**
-     * Change user password.
-     *
-     */
-    public function changePassword(ChangePasswordRequest $request) {
-        $user = Auth::user();
-        if ((!Hash::check($request->oldPassword, $user->password) && !Hash::check('social', $user->password)) || !$user->hasRole('userAdmin')) {
-            throw new UnprocessableEntityHttpException();
-        }
-        $userResource = App::make('UsersResource');
-        $userRepository = $userResource->getRepository('User');
-        $userRepository->update(['password' => $request->password], $user->id);
-        return $this->validSuccessJsonResponse('Success');
-    }
-
-    /**
-     * Change user email.
-     *
-     */
-    public function changeEmail(ChangeEmailRequest $request) {
-        $user = Auth::user();
-        if (!$user->hasRole('userAdmin')) {
-            throw new UnprocessableEntityHttpException();
-        }
-        $userResource = App::make('UsersResource');
-        $userRepository = $userResource->getRepository('User');
-        $userRepository->update(['email' => $request->email], $user->id);
-        return $this->validSuccessJsonResponse('Success', [
-            'email' => $request->email
-        ]);
-    }
-
 }
