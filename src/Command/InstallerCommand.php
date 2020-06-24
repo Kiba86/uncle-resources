@@ -15,7 +15,7 @@ class InstallerCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'resource:install {resource} {--force : force to remove and reinstall}';
+    protected $signature = 'uncle:resource-install {resource} {--force : force to remove and reinstall}';
 
     /**
      * The console command description.

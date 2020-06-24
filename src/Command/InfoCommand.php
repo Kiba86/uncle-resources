@@ -12,7 +12,7 @@ class InfoCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'resource:installer-info';
+    protected $signature = 'uncle:resource-installer-info';
 
     /**
      * The console command description.
